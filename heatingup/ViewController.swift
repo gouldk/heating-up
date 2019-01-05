@@ -7,34 +7,38 @@
 //
 
 // https://www.reddit.com/r/hiphopheads.json
+// https://stackoverflow.com/questions/32950874/wait-for-download-task-to-finish-in-nsurlsession
+// 
 
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    var jsonData: Subreddit?
+    let linkURLString = "https://www.reddit.com/r/hiphopheads.json"
+    let semaphore = DispatchSemaphore(value: 0)
+    
+    @IBAction func refresh(_ sender: UIButton) {
+        _ = print(self.fetchPostData())
+    }
+    func fetchPostData() -> Subreddit? {
+        guard let linkURL = URL(string: linkURLString) else { return nil }
+        URLSession.shared.dataTask(with: linkURL) { (data, response, error) in
+            guard let fetchedJSON = data else { return }
+            
+            let decodedJSON = try! JSONDecoder.init().decode(Subreddit.self, from: fetchedJSON)
+            self.jsonData = decodedJSON
+//            print(self.jsonData!.data?.children[1].data?.author ?? "oops")
+            self.semaphore.signal()
+            }.resume()
+        _ = self.semaphore.wait(timeout: DispatchTime.distantFuture)
+        return jsonData
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("TEST")
-        let linkURLString = "https://www.reddit.com/r/hiphopheads.json"
-        guard let linkURL = URL(string: linkURLString) else { return }
+        print(self.fetchPostData()!.data?.children.count ?? "Parsing failed!")
         
-        URLSession.shared.dataTask(with: linkURL) { (data, response, error) in
-            guard let data = data else { return }
-//            let dataAsString = String(data: data, encoding: .utf8)
-//
-            print("Made it here")
-            
-            let decodedJSON = try! JSONDecoder.init().decode(Subreddit.self, from: data)
-            print(decodedJSON.data?.children ?? "oops")
-            
-//            do {
-//                let decodedJSON = try
-//                    JSONDecoder.init().decode(Subreddit.self, from: data);
-//                print(decodedJSON.data?.children ?? "oops")
-//            } catch let _ as NSError {}
-        }.resume()
-        
-        print("END TEST")
         // Do any additional setup after loading the view, typically from a nib.
     }
 }

@@ -40,7 +40,7 @@ struct PostData: Decodable {
     let gilded: Int?
     let clicked: Bool?
     let title: String?
-    let link_flair_richtext: Array<String>? // eh
+    let link_flair_richtext: [richtextflair?]
     let subreddit_name_prefixed: String?
     let hidden: Bool?
     let pwls: Int?
@@ -63,7 +63,7 @@ struct PostData: Decodable {
     let edited: edited?
     let author_flair_css_class: String?
     let author_flair_rich_text: String?
-    let gildings: Dictionary<String, Int>? // no
+    let gildings: Dictionary<String, Int>?
     let content_categories: [String]? // eh
     let is_self: Bool?
     let mod_note: String?
@@ -150,6 +150,15 @@ struct oembed: Decodable {
     let thumbnail_height: Int?
 }
 
+struct richtextflair: Decodable {
+    let e: String?
+    let t: String?
+}
+
+/**
+ This struct handles the special 'edited' json field, which is represented by either a boolean value
+ or an integer value, and is unknown before fetching.
+ */
 struct edited: Decodable {
     let edited: Bool?
     let editTime: Int?
