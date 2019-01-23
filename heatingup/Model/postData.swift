@@ -14,7 +14,6 @@ import UIKit
 struct Subreddit: Decodable {
     let kind: String?
     let data: SubredditData?
-    
 }
 
 struct SubredditData: Decodable {

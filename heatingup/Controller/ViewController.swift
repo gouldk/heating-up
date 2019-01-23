@@ -21,7 +21,9 @@ class ViewController: UIViewController {
     @IBAction func refresh(_ sender: UIButton) {
         _ = print(self.fetchPostData())
     }
-    func fetchPostData() -> Subreddit? {
+    
+    
+    public func fetchPostData() -> Subreddit? {
         guard let linkURL = URL(string: linkURLString) else { return nil }
         URLSession.shared.dataTask(with: linkURL) { (data, response, error) in
             guard let fetchedJSON = data else { return }
