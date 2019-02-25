@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Post Table View Controller-->
         <scene sceneID="Lws-WY-ZvN">
             <objects>
-                <tableViewController id="Kqa-n1-ws1" sceneMemberID="viewController">
+                <tableViewController id="Kqa-n1-ws1" customClass="PostTableViewController" customModule="heatingup" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JQe-bN-8Wc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,11 +22,6 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="k6t-xX-vOM">
-                                    <rect key="frame" x="16" y="116" width="343" height="0.0"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </tableView>
                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="HEATING UP" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fkb-vV-ICx">
                                     <rect key="frame" x="32" y="0.0" width="310" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -41,6 +36,9 @@
                                     <state key="normal" title="Fetch new posts">
                                         <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
+                                    <connections>
+                                        <action selector="refreshPosts:" destination="Kqa-n1-ws1" eventType="touchUpInside" id="fvU-g2-xXa"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -82,10 +80,9 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="imageDescriptor" destination="zBz-hH-zCg" id="6g0-sF-XBw"/>
+                                    <outlet property="descriptor" destination="OMi-hR-ccr" id="hAF-cf-s8R"/>
                                     <outlet property="postTitle" destination="8KW-Ql-4S4" id="hxe-ur-of8"/>
                                     <outlet property="upvotes" destination="lMe-5Y-vo9" id="fSc-XQ-1Or"/>
-                                    <outlet property="voteDescriptor" destination="lMe-5Y-vo9" id="TfV-go-7sb"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

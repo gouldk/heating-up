@@ -14,12 +14,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //  func addChildViewController(_ childController: PostTableViewController)
+    
     var jsonData: Subreddit?
     let linkURLString = "https://www.reddit.com/r/hiphopheads.json"
     let semaphore = DispatchSemaphore(value: 0)
     
     @IBAction func refresh(_ sender: UIButton) {
-        _ = print(self.fetchPostData())
+        _ = print(self.fetchPostData()!)
     }
     
     
@@ -30,7 +32,7 @@ class ViewController: UIViewController {
             
             let decodedJSON = try! JSONDecoder.init().decode(Subreddit.self, from: fetchedJSON)
             self.jsonData = decodedJSON
-//            print(self.jsonData!.data?.children[1].data?.author ?? "oops")
+            print(self.jsonData!.data?.children[1].data?.author ?? "oops")
             self.semaphore.signal()
             }.resume()
         _ = self.semaphore.wait(timeout: DispatchTime.distantFuture)

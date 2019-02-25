@@ -10,15 +10,41 @@ import UIKit
 
 class PostTableViewController: UITableViewController {
     
-    let controllerRef = ViewController()
+    
+    var jsonData: Subreddit?
+    let linkURLString = "https://www.reddit.com/r/hiphopheads.json"
+    let semaphore = DispatchSemaphore(value: 0)
+    
+    
+    public func fetchPostData() -> Subreddit? {
+        guard let linkURL = URL(string: linkURLString) else { return nil }
+        URLSession.shared.dataTask(with: linkURL) { (data, response, error) in
+            guard let fetchedJSON = data else { return }
+            
+            let decodedJSON = try! JSONDecoder.init().decode(Subreddit.self, from: fetchedJSON)
+            self.jsonData = decodedJSON
+            print(self.jsonData!.data?.children[1].data?.author ?? "oops")
+            self.semaphore.signal()
+            }.resume()
+        _ = self.semaphore.wait(timeout: DispatchTime.distantFuture)
+        return jsonData
+    }
+    
     var posts = [PostData]()
     
     private func loadPostData() {
-        let postArray = controllerRef.fetchPostData()?.data?.children
-        for post in postArray! {
-            posts.append(post.data!)
+        let postArray = self.fetchPostData()!.data!.children
+        for post in postArray {
+            if (post.data?.title?.hasPrefix("[FRESH]"))! {
+                posts.append(post.data!)
+            }
         }
     }
+    
+    @IBAction func refreshPosts(_ sender: Any) {
+        self.loadPostData()
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +78,11 @@ class PostTableViewController: UITableViewController {
         let post = posts[indexPath.row]
         cell.postTitle.text = post.title
         cell.upvotes.text = post.ups!.description
-
+        if (Int(post.ups!.description)! > 500) {
+            cell.descriptor.text = "HOT"
+        }
+        else { cell.descriptor.text = "MEDIUM" }
+        
         return cell
     }
     

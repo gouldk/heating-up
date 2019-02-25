@@ -11,9 +11,11 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
 
     //MARK: Properties
-    
+    @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var postTitle: UILabel!
     @IBOutlet weak var upvotes: UILabel!
+    @IBOutlet weak var descriptor: UILabel!
+    
     // imageDescriptor, ...
     
     
