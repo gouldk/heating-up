@@ -41,18 +41,8 @@ class MainController: UITableViewController {
         }
         posts.sort { (lhs:PostData, rhs:PostData) -> Bool in
             return lhs.ups! > rhs.ups!
-        }
-//        cleanupTitles()
-        
+        }        
     }
-    
-//    private func cleanupTitles() {
-//        for post in posts {
-//            if (post.title!.lowercased().hasPrefix("[fresh]")) {
-//                post.title = post.title!.dropFirst(7)
-//            }
-//        }
-//    }
     
     @IBAction func refreshPosts(_ sender: Any) {
         posts.removeAll()

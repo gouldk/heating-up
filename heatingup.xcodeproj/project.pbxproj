@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		270608BC21E16EB9002A7004 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270608BB21E16EB9002A7004 /* MainController.swift */; };
-		2731DA2121DC473F0013B2EE /* postData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2731DA2021DC473F0013B2EE /* postData.swift */; };
+		2731DA2121DC473F0013B2EE /* subredditData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2731DA2021DC473F0013B2EE /* subredditData.swift */; };
 		276FCFCB21D6C73D0078D698 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276FCFCA21D6C73D0078D698 /* AppDelegate.swift */; };
 		276FCFD021D6C73D0078D698 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 276FCFCE21D6C73D0078D698 /* Main.storyboard */; };
 		276FCFD221D6C73E0078D698 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 276FCFD121D6C73E0078D698 /* Assets.xcassets */; };
@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		270608BB21E16EB9002A7004 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
-		2731DA2021DC473F0013B2EE /* postData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postData.swift; sourceTree = "<group>"; };
+		2731DA2021DC473F0013B2EE /* subredditData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subredditData.swift; sourceTree = "<group>"; };
 		276FCFC721D6C73D0078D698 /* heatingup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = heatingup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		276FCFCA21D6C73D0078D698 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		276FCFCF21D6C73D0078D698 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				27DDCB5A21E165D000BBF363 /* PostTableViewCell.swift */,
-				2731DA2021DC473F0013B2EE /* postData.swift */,
+				2731DA2021DC473F0013B2EE /* subredditData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -253,7 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				270608BC21E16EB9002A7004 /* MainController.swift in Sources */,
-				2731DA2121DC473F0013B2EE /* postData.swift in Sources */,
+				2731DA2121DC473F0013B2EE /* subredditData.swift in Sources */,
 				276FCFCB21D6C73D0078D698 /* AppDelegate.swift in Sources */,
 				27DDCB5B21E165D000BBF363 /* PostTableViewCell.swift in Sources */,
 			);
