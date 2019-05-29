@@ -8,7 +8,7 @@ class MainController: UITableViewController {
     let semaphore = DispatchSemaphore(value: 0)
     
     // Grabs untouched JSON data directly from reddit
-    public func fetchPostData() -> Subreddit? {
+    private func fetchPostData() -> Subreddit? {
         guard let linkURL = URL(string: linkURLString) else { return nil }
         URLSession.shared.dataTask(with: linkURL) { (data, response, error) in
             guard let fetchedJSON = data else { return }
@@ -26,12 +26,33 @@ class MainController: UITableViewController {
     // Parses Subreddit struct to only relay valid tracks.
     private func loadPostData() {
         let postArray = self.fetchPostData()!.data!.children
+        //for i in 0..<postArray.count {
+        // Checks for prefix and removes from displayed title.
         for post in postArray {
-            if (post.data?.title?.lowercased().hasPrefix("[fresh]"))! {
+            if ((post.data?.title?.lowercased().hasPrefix("[fresh]"))!) {
+                post.data!.title = post.data!.title!.dropFirst(8).description
+                posts.append(post.data!)
+            }
+            
+            else if ((post.data?.title?.lowercased().hasPrefix("[leak]"))!) {
+                post.data!.title = post.data!.title!.dropFirst(7).description
                 posts.append(post.data!)
             }
         }
+        posts.sort { (lhs:PostData, rhs:PostData) -> Bool in
+            return lhs.ups! > rhs.ups!
+        }
+//        cleanupTitles()
+        
     }
+    
+//    private func cleanupTitles() {
+//        for post in posts {
+//            if (post.title!.lowercased().hasPrefix("[fresh]")) {
+//                post.title = post.title!.dropFirst(7)
+//            }
+//        }
+//    }
     
     @IBAction func refreshPosts(_ sender: Any) {
         posts.removeAll()
@@ -58,7 +79,6 @@ class MainController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(posts.count)
         return posts.count
     }
     

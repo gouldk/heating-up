@@ -13,23 +13,23 @@ import UIKit
 
 struct Subreddit: Decodable {
     let kind: String?
-    let data: SubredditData?
+    var data: SubredditData?
 }
 
-struct SubredditData: Decodable {
+class SubredditData: Decodable {
     let modhash: String?
     let dist: Int?
-    let children: [PostWrapper]
+    var children: [PostWrapper]
     let after: String?
     let before: String?
 }
 
-struct PostWrapper: Decodable {
+class PostWrapper: Decodable {
     let kind: String?
-    let data: PostData?
+    var data: PostData?
 }
 
-struct PostData: Decodable {
+class PostData: Decodable {
     let approved_at_utc: String?
     let subreddit: String?
     let selfText: String?
@@ -38,7 +38,7 @@ struct PostData: Decodable {
     let mod_reason_title: String?
     let gilded: Int?
     let clicked: Bool?
-    let title: String?
+    var title: String?
     let link_flair_richtext: [richtextflair?]
     let subreddit_name_prefixed: String?
     let hidden: Bool?
