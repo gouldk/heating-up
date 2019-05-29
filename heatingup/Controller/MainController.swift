@@ -1,21 +1,13 @@
-//
-//  PostTableViewController.swift
-//  heatingup
-//
-//  Created by Kyle on 1/5/19.
-//  Copyright © 2019 Kyle. All rights reserved.
-//
-
 import UIKit
 
-class PostTableViewController: UITableViewController {
+class MainController: UITableViewController {
     
-    
+    var posts = [PostData]()
     var jsonData: Subreddit?
     let linkURLString = "https://www.reddit.com/r/hiphopheads.json"
     let semaphore = DispatchSemaphore(value: 0)
     
-    
+    // Grabs untouched JSON data directly from reddit
     public func fetchPostData() -> Subreddit? {
         guard let linkURL = URL(string: linkURLString) else { return nil }
         URLSession.shared.dataTask(with: linkURL) { (data, response, error) in
@@ -30,25 +22,31 @@ class PostTableViewController: UITableViewController {
         return jsonData
     }
     
-    var posts = [PostData]()
     
+    // Parses Subreddit struct to only relay valid tracks.
     private func loadPostData() {
         let postArray = self.fetchPostData()!.data!.children
         for post in postArray {
-            if (post.data?.title?.hasPrefix("[FRESH]"))! {
+            if (post.data?.title?.lowercased().hasPrefix("[fresh]"))! {
                 posts.append(post.data!)
             }
         }
     }
     
     @IBAction func refreshPosts(_ sender: Any) {
+        posts.removeAll()
         self.loadPostData()
+        refreshControl?.endRefreshing()
+        tableView.reloadData()
     }
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         loadPostData()
+        super.viewDidLoad()
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(refreshPosts(_:)), for: .valueChanged)
+        self.refreshControl = refreshControl
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -59,20 +57,15 @@ class PostTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    // MAY NEED TO CHANGE
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(posts.count)
         return posts.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "PostTableViewCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PostTableViewCell else {
-                fatalError("Dequeued cell not correct type. (CE)")
+            fatalError("Dequeued cell not correct type. (CE)")
         }
         
         let post = posts[indexPath.row]
