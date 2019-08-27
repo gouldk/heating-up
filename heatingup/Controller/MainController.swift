@@ -72,6 +72,25 @@ class MainController: UITableViewController {
         return posts.count
     }
     
+    // Segue on cell click
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        self.performSegue(withIdentifier: "ShowPostDetails", sender: indexPath.row)
+    }
+    
+    // Prepare to pass json data for next scene
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+//        let selectedRow = Int(sender as! String)!
+        var index: Int = (sender! as AnyObject).integerValue
+        print(type(of: sender!))
+        if segue.destination is DetailViewController {
+        let dc = segue.destination as? DetailViewController
+            dc?.postTitle = posts[index].title!
+        }
+        
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "PostTableViewCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PostTableViewCell else {
@@ -82,9 +101,9 @@ class MainController: UITableViewController {
         cell.postTitle.text = post.title
         cell.upvotes.text = post.ups!.description
         if (Int(post.ups!.description)! > 500) {
-            cell.descriptor.text = "HOT"
+            cell.descriptor.text = "🔥🔥🔥"
         }
-        else { cell.descriptor.text = "MEDIUM" }
+        else { cell.descriptor.text = "🔥🔥" }
         
         return cell
     }
