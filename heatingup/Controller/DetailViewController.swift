@@ -10,12 +10,26 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var provider:String = ""
+    var contentProvider:String = ""
     var link:String = ""
-    var postTitle:String = ""
+    var pTitle:String = ""
     var postDate:String = ""
     
     
+    @IBOutlet weak var hoursFromPost: UILabel!
+    @IBOutlet weak var provider: UILabel!
+    @IBOutlet weak var songLink: UILabel!
+    @IBOutlet weak var postTitle: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print(type(of: pTitle))
+        postTitle.text = pTitle
+        hoursFromPost.text = postDate
+        provider.text = contentProvider
+        songLink.text = link
+        
+    }
     
     
 }

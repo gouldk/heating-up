@@ -78,17 +78,15 @@ class MainController: UITableViewController {
         self.performSegue(withIdentifier: "ShowPostDetails", sender: indexPath.row)
     }
     
-    // Prepare to pass json data for next scene
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-//        let selectedRow = Int(sender as! String)!
-        var index: Int = (sender! as AnyObject).integerValue
-        print(type(of: sender!))
-        if segue.destination is DetailViewController {
-        let dc = segue.destination as? DetailViewController
-            dc?.postTitle = posts[index].title!
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let indexPath = tableView.indexPathForSelectedRow{
+            let selectedRow = indexPath.row
+            print(selectedRow)
+            let detailVC = segue.destination as! DetailViewController
+            detailVC.pTitle = posts[selectedRow].title!
+            detailVC.link = posts[selectedRow].permalink!
+            detailVC.postDate = String(posts[selectedRow].created_utc!)
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
